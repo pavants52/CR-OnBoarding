@@ -7,7 +7,7 @@ node {
             
         }
 
-        stage("static code analysis"){
+       /* stage("static code analysis"){
             
                 withSonarQubeEnv('SonarQube') {
           sh ' sonar:sonar ' +
@@ -15,7 +15,7 @@ node {
           ' -Dsonar.organization=pavants52-github ' +
          ' -Dsonar.login=6dd85dc7820c0b59f3cd2e15b71d3a5437045b40 '                 }
             
-        }
+        } */
 
         stage("build docker image"){
             
