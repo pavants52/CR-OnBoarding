@@ -1,6 +1,6 @@
 node {
    
-    stages {
+    
         stage("checkout"){
             steps {
                 git credentialsId: '3fb46b3b-b800-453f-9bc2-2d15b01dbb4e', url: 'https://github.com/pavants52/CR-OnBoarding'
@@ -42,5 +42,5 @@ node {
         }
 
     }
-}
+
 
