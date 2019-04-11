@@ -1,48 +1,49 @@
-node {
-   
-    
+pipeline {
+    agent { label "build" }
+    environment {
+         def ip = sh returnStdout: true, script: 'curl -s http://169.254.169.254/latest/meta-data/public-ipv4'
+    }
+
+    stages {
         stage("checkout"){
-            
-                git credentialsId: '3fb46b3b-b800-453f-9bc2-2d15b01dbb4e', url: 'https://github.com/pavants52/CR-OnBoarding'
-            
+            steps {
+                checkout scm
+            }
         }
 
-       /* stage("static code analysis"){
-            
-                withSonarQubeEnv('SonarQube') {
-          sh ' sonar:sonar ' +
-          ' -Dsonar.host.url=https://sonarcloud.io '+
-          ' -Dsonar.organization=pavants52-github ' +
-         ' -Dsonar.login=6dd85dc7820c0b59f3cd2e15b71d3a5437045b40 '                 }
-            
-        } */
+        stage("static code analysis"){
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh '/opt/sonar/bin/sonar-scanner -Dsonar.projectKey=ZervOnboarding -Dsonar.sources=api'
+                }
+            }
+        }
 
         stage("build docker image"){
-           
+            steps {
                 sh "docker-compose build"
-            
+            }
         }
 
 
         stage("env cleanup"){
-            
+            steps {
                 sh "docker image prune -f"
-            
+            }
         }
 
         stage("Launch service"){
-            
+            steps {
                 sh "docker-compose stop"
                 sh "docker-compose up -d"
-            
+            }
         }
 
         stage("Launch Info"){
-            
+            steps {
                 echo "service running on ${ip}"
             }
-        
+        }
 
     }
-
-
+}
