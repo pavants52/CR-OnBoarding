@@ -1,20 +1,16 @@
-pipeline {
-    agent { label "build" }
-    environment {
-         def ip = sh returnStdout: true, script: 'curl -s http://169.254.169.254/latest/meta-data/public-ipv4'
-    }
-
+node {
+   
     stages {
         stage("checkout"){
             steps {
-                checkout scm
+                git credentialsId: '3fb46b3b-b800-453f-9bc2-2d15b01dbb4e', url: 'https://github.com/pavants52/CR-OnBoarding'
             }
         }
 
         stage("static code analysis"){
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh '/opt/sonar/bin/sonar-scanner -Dsonar.projectKey=ZervOnboarding -Dsonar.sources=api'
+                withSonarQubeEnv('SonarQube') {
+                    sh '/opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pavants52_CR-OnBoarding -Dsonar.sources=api'
                 }
             }
         }
