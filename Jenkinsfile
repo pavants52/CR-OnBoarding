@@ -10,8 +10,10 @@ node {
         stage("static code analysis"){
             
                 withSonarQubeEnv('SonarQube') {
-                    sh '/opt/sonar/bin/sonar-scanner -Dsonar.projectKey=pavants52_CR-OnBoarding -Dsonar.sources=api'
-                }
+          sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar ' +
+          ' -Dsonar.host.url=https://sonarcloud.io '+
+          ' -Dsonar.organization=pavants52-github ' +
+         ' -Dsonar.login=6dd85dc7820c0b59f3cd2e15b71d3a5437045b40 '                 }
             
         }
 
