@@ -19,7 +19,7 @@ node {
 
         stage("build docker image"){
             
-                sh "docker build -t onboard ."
+                sh "sudo docker build -t onboard ."
             
         }
 
