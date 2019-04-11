@@ -18,9 +18,9 @@ node {
         } */
 
         stage("build docker image"){
-            
-                sh "sudo docker build -t onboard ."
-            
+            steps {
+                sh "docker-compose build"
+            }
         }
 
 
