@@ -9,8 +9,8 @@ node {
 
         stage("static code analysis"){
             
-                withMaven(jdk: 'java 8', maven: 'maven 3.6.0') {
-          sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar ' +
+                withSonarQubeEnv('SonarQube') {
+          sh ' sonar:sonar ' +
           ' -Dsonar.host.url=https://sonarcloud.io '+
           ' -Dsonar.organization=pavants52-github ' +
          ' -Dsonar.login=6dd85dc7820c0b59f3cd2e15b71d3a5437045b40 '                 }
